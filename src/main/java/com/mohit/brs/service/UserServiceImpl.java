@@ -110,6 +110,11 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByEmail(username);
     }
 
+    @Override
+    public Optional<User> getUserById(Long passengerId) {
+        return userRepository.findById(passengerId);
+    }
+
 //  @many-to-many
 //    public Collection<? extends GrantedAuthority> mapRolesToAuthorities(Set<Role> roles){
 //        return roles.stream().map(role -> new SimpleGrantedAuthority(role.toString())).collect(Collectors.toList());

@@ -13,4 +13,6 @@ public class AgencyDTO {
     private String code;
     private String details;
     private String name;
+
+
 }

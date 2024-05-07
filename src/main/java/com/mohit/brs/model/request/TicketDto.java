@@ -20,8 +20,9 @@ public class TicketDto {
 
     private String journeyDate;
 
-    private User passenger;
+    private String passengerEmailId; // Assuming this is the ID of the passenger
 
-    private TripSchedule tripSchedule;
+    private Long tripScheduleId;
+
 
 }

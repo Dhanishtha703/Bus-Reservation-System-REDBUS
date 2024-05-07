@@ -6,6 +6,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 
 @Service
 public interface UserService extends UserDetailsService {
@@ -21,4 +23,6 @@ public interface UserService extends UserDetailsService {
     UserDetails loadUserByUsername(String email);
 
     User findByEmail(String username);
+
+    Optional<User> getUserById(Long passengerId);
 }
