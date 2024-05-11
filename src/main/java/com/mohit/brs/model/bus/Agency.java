@@ -2,10 +2,7 @@ package com.mohit.brs.model.bus;
 
 import com.mohit.brs.model.user.User;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Objects;
 import java.util.Set;
@@ -16,6 +13,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity
 @Builder
+@ToString(exclude = {"owner", "buses"})
 @Table(name = "agency")
 public class Agency {
 

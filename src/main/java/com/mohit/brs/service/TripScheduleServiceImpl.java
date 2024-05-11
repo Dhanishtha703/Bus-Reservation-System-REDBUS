@@ -1,5 +1,6 @@
 package com.mohit.brs.service;
 
+import com.mohit.brs.model.bus.Bus;
 import com.mohit.brs.model.bus.Trip;
 import com.mohit.brs.model.bus.TripSchedule;
 import com.mohit.brs.model.request.TripScheduleDto;
@@ -25,13 +26,15 @@ public class TripScheduleServiceImpl implements TripScheduleService{
         // Create a new TripSchedule instance
         TripSchedule tripSchedule = new TripSchedule();
 
+        Bus bus = trip.getBus();
+
         // Set the Trip object for the TripSchedule
         tripSchedule.setTripDetail(trip);
 
         // Set other properties for the TripSchedule
         tripSchedule.setTripDate(tripScheduleDto.getTripDate());
         //tripSchedule.setTripDetail(tripScheduleDto.getTripDetail());
-        tripSchedule.setAvailableSeats(tripScheduleDto.getAvailableSeats());
+        tripSchedule.setAvailableSeats(bus.getCapacity());
         tripSchedule.setTicketsSold(tripScheduleDto.getTicketsSold());
 
         tripScheduleRepository.saveAndFlush(tripSchedule);

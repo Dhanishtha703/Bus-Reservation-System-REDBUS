@@ -1,10 +1,7 @@
 package com.mohit.brs.model.bus;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Fetch;
 
 import java.util.Objects;
@@ -14,6 +11,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Entity
 @Builder
+@ToString(exclude = {"agency"})
 @Table(name = "bus")
 public class Bus {
 

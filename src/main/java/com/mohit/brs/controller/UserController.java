@@ -10,6 +10,7 @@ import com.mohit.brs.model.request.*;
 import com.mohit.brs.model.user.Role;
 import com.mohit.brs.model.user.User;
 import com.mohit.brs.repository.StopRepository;
+import com.mohit.brs.repository.TicketRepository;
 import com.mohit.brs.repository.TripScheduleRepository;
 import com.mohit.brs.service.*;
 import org.modelmapper.ModelMapper;
@@ -53,6 +54,9 @@ public class UserController {
 
     @Autowired
     TicketService ticketService;
+
+    @Autowired
+    TicketRepository ticketRepository;
 
     @Autowired
     JwtHelper jwtHelper;
@@ -162,6 +166,7 @@ public class UserController {
         try {
             // Retrieve passenger, trip schedule, and other details from the request
             User passenger = userService.findByEmail(ticketDto.getPassengerEmailId());
+
             if(passenger == null){
                 return ResponseEntity.badRequest().body("User is Not Present !!!!");
             }
@@ -170,6 +175,11 @@ public class UserController {
             TripSchedule tripSchedule = tripScheduleRepository.findById(ticketDto.getTripScheduleId())
                     .orElseThrow(() -> new IllegalArgumentException("No Schedule for this Trip found !!"));
 
+            if (!ticketDto.getJourneyDate().equals(tripSchedule.getTripDate())) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Please select correct trip date for this trip schedule");
+
+            }
+
             // Check if there are available seats
             int availableSeats = tripSchedule.getAvailableSeats();
             if (availableSeats <= 0) {
@@ -177,10 +187,13 @@ public class UserController {
             }
 
             // Check if the user has already booked a ticket for this trip schedule
-            boolean alreadyBooked = tripSchedule.getTicketsSold().stream()
-                    .anyMatch(ticket -> ticket.getPassenger().equals(passenger));
-            if (alreadyBooked) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User has already booked a ticket for this trip schedule");
+//            boolean alreadyBooked = tripSchedule.getTicketsSold().stream()
+//                    .anyMatch(ticket -> ticket.getPassenger().equals(passenger));
+
+            Ticket alreadyBooked = ticketRepository.findBySeatNumber(ticketDto.getSeatNumber());
+
+            if (alreadyBooked != null) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Seat is already Booked");
             }
 
             // Book the ticket
@@ -191,6 +204,8 @@ public class UserController {
 
             // Update the available seats
             tripSchedule.setAvailableSeats(availableSeats - 1);
+
+            //Save the changes to trip schedule
             tripScheduleRepository.save(tripSchedule);
 
             return new ResponseEntity<>(ticket, HttpStatus.OK);

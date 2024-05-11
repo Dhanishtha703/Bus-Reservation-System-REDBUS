@@ -1,5 +1,6 @@
 package com.mohit.brs.service;
 
+import com.mohit.brs.model.bus.Bus;
 import com.mohit.brs.model.bus.Ticket;
 import com.mohit.brs.model.bus.TripSchedule;
 import com.mohit.brs.model.request.TicketDto;
@@ -17,6 +18,9 @@ public class TicketServiceImpl implements TicketService{
 
     @Autowired
     TripScheduleRepository tripScheduleRepository;
+
+//    @Autowired
+//    Bus bus;
 
     @Override
     public Ticket bookTicket(TicketDto ticketDto, User passenger ){

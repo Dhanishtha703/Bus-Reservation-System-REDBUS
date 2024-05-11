@@ -16,14 +16,14 @@ import java.util.Set;
 @Builder
 public class TripScheduleDto {
 
-    private Integer availableSeats;
+   // private Integer availableSeats;
 
     private String tripDate;
 
 //    @Column(name = "trip_id")
 //    private Integer tripId;
 
-    private Trip tripDetail;
+   // private Trip tripDetail;
 
     private Set<Ticket> ticketsSold;
 

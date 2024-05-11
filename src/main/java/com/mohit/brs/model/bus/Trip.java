@@ -1,16 +1,15 @@
 package com.mohit.brs.model.bus;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Builder
+@ToString(exclude = {"bus", "agency", "tripSchedule"})
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "tripId")
 @Table(name = "trip")
 public class Trip {
@@ -36,13 +35,16 @@ public class Trip {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bus_id")
+    @JsonIgnore
     private Bus bus;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "agency_id")
+    @JsonIgnore
     private Agency agency;
 
     @OneToOne(mappedBy = "tripDetail", cascade = CascadeType.ALL)
+    @JsonIgnore
     private TripSchedule tripSchedule;
 
 
